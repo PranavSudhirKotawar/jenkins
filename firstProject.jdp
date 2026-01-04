@@ -16,13 +16,22 @@ pipeline{
 
          stage("test"){
             steps{
+                sh '''
+                    cd backend
+                    mvn clean verify sonar:sonar \\
+                    -Dsonar.projectKey=project \\
+                    -Dsonar.projectName=\'first project\' \\
+                    -Dsonar.host.url=http://13.60.105.251:9000 \\
+                    -Dsonar.token=sqp_21e343fe1f280c4f5fa8925626ff4a3bf44e9eca'''
                 echo"thest is succesful"
             }
         }
 
-         stage("deploy"){
+         stage("test 2"){
             steps{
-                echo"deploy succesful"
+                withSonarQubeEnv(installationName: 'sonar', credentialsId: 'sonar1') {
+             // some block
+            }
             }
         }
         
